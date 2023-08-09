@@ -1,0 +1,89 @@
+* {
+    font-family: "Poppins", arial;
+    font-weight: 500;
+    margin: 0;
+    padding: 0;
+}
+
+#home {
+    margin-top: 7rem;
+}
+
+.editProPage {
+    font-size: smaller;
+    padding: 0px 25rem;
+}
+
+.editProPage button {
+    width: 100%;
+    font-size: smaller;
+}
+
+.editProPage input {
+    font-size: smaller;
+    height: 2.5rem;
+}
+
+.headForm p {
+    color: #2e266f;
+    font-size: small;
+}
+
+.have p {
+    font-size: x-small;
+}
+
+.upload-container-profile {
+    left: 5rem;
+    position: relative;
+    width: 10rem;
+    height: 10rem;
+    border: 1px solid #ced4da;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-file-upload-profile {
+    margin-left: 6.4rem;
+    /* position: absolute;
+    top: 48%;
+    left: 50%;
+    transform: translate(-50%, -50%); */
+    /* background-color: #007bff; */
+    /* color: #fff; */
+    padding: 12px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    cursor: pointer;
+    z-index: 1; /* Tombol di atas gambar preview */
+}
+
+/* CSS untuk mengatur gaya div preview */
+.image-preview-profile {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.image-preview-profile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@media (max-width: 992px) {
+    .editProPage {
+        padding: 5rem 10rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .editProPage {
+        padding: 0px 1rem;
+    }
+}

@@ -1,0 +1,357 @@
+* {
+    font-family: "Poppins", arial;
+    font-weight: 500;
+    margin: 0;
+    padding: 0;
+}
+
+#home {
+    margin-top: 8rem;
+}
+
+#home h1 {
+    font-size: 3rem;
+    color: #2e266f;
+}
+
+.photo img {
+    cursor: pointer;
+}
+
+.side1 {
+    position: absolute;
+    width: 2rem;
+    height: 50rem;
+    z-index: -99;
+    margin-top: 16rem;
+    right: 0;
+}
+
+.side2 {
+    position: absolute;
+    width: 2rem;
+    height: 50rem;
+    z-index: -99;
+    margin-top: 80rem;
+    right: 0;
+}
+
+.inputSearch {
+    width: 27em;
+    height: 3em;
+    /* background-color: #efefef; */
+}
+
+.inputSearch input {
+    border-left: none;
+    font-size: small !important;
+    text-transform: capitalize;
+    margin: 0;
+}
+
+.inputSearch input::placeholder {
+    color: #b6b6b6;
+}
+
+.user::before {
+    content: "";
+    display: block;
+    width: 5px;
+    height: 3rem;
+    background-color: #efc81a;
+    margin-right: 1rem;
+}
+
+.user1 {
+    /* background-color: red; */
+    width: 11rem;
+    /* height: 4rem; */
+}
+
+.user1::after {
+    content: "";
+    display: block;
+    width: 5px;
+    height: 3rem;
+    background-color: #efc81a;
+    margin-left: 1rem;
+}
+
+.headUser {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+.titleDesc {
+    margin-top: 3rem !important;
+}
+
+.titleDesc p {
+    color: #3f3a3a;
+    cursor: pointer;
+}
+
+.titleDesc button {
+    color: white;
+    cursor: pointer;
+    font-size: x-small;
+}
+
+.desc {
+    width: 9rem;
+}
+
+.desc p {
+    font-size: 14px;
+    text-transform: capitalize;
+    color: #3f3a3a;
+}
+
+.page {
+    margin-top: 7rem;
+    color: #3f3a3a;
+}
+
+.homedetail img {
+    width: 45rem;
+    height: 28rem;
+}
+
+.listingre ul {
+    list-style-type: "- ";
+    margin-left: 15px;
+    padding: 0;
+    text-transform: capitalize;
+}
+
+.author .btnEdit {
+    background-color: #30c0f3;
+    border: 1px solid #30c0f3;
+    height: 2rem;
+}
+
+.author .btnDelete {
+    background-color: #f57e71;
+    border: 1px solid #f57e71;
+    height: 2rem;
+}
+
+.listMenu {
+    width: 27rem;
+}
+
+.btnHelp ul li {
+    border: none;
+    background-color: transparent;
+}
+
+.btnHelp ul li {
+    text-decoration: none;
+}
+
+.btnHelp ul li button:hover {
+    color: #efc81a;
+}
+
+.nav-tabs .nav-link {
+    font-family: "Poppins", sans-serif;
+    text-transform: uppercase;
+    font-size: 1.8rem;
+    color: #c4c4c4;
+    background-color: #fff;
+    border: #fff;
+    margin-right: 50%;
+}
+
+.nav-tabs .nav-link.active {
+    color: #efc81a !important;
+    background-color: #0000;
+}
+
+.navbar {
+    background-color: transparent;
+    transition: background-color 0.3s;
+}
+
+/* CSS untuk mengatur background navbar saat di-scroll */
+.navbar-scrolled {
+    background-color: #fff;
+}
+
+.bg-preview {
+    background-image: url("../img/Rectangle\ 313.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.headForm p {
+    color: #2e266f;
+    font-size: small;
+}
+
+.editProPage {
+    font-size: smaller;
+    padding: 0px 25rem;
+}
+
+.editProPage button {
+    width: 100%;
+    font-size: smaller;
+}
+
+.editProPage input {
+    font-size: smaller;
+    height: 2.5rem;
+}
+
+.imgCover {
+    overflow: hidden;
+}
+
+.imgCover img {
+    transition: scale 400ms;
+}
+
+.imgCover img:hover {
+    scale: 120%;
+    cursor: pointer;
+}
+
+.have p {
+    font-size: x-small;
+}
+
+footer {
+    height: auto;
+    margin-top: 8rem;
+}
+
+footer p {
+    color: #2e266f;
+    font-size: 3rem;
+    font-weight: normal;
+}
+
+footer h6 {
+    color: #707070;
+}
+
+.list {
+    margin-top: 10rem;
+    font-size: small;
+}
+
+.list li {
+    color: #707070;
+}
+
+.text {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    height: 100%;
+}
+
+.date {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.eat {
+    margin-top: 8rem;
+}
+
+.modal-content {
+    background-color: #fff;
+    border: none;
+    text-align: center;
+    padding: 20px;
+}
+
+.modal-header {
+    border-bottom: none;
+}
+
+.modal-body {
+    color: #ffc107; /* Warna kuning */
+    font-size: 24px;
+}
+
+.modal-footer {
+    border-top: none;
+    text-align: center;
+}
+
+.btnYes {
+    width: 20rem;
+}
+
+.btnCancel {
+    width: 20rem;
+    background-color: #e7e7e7;
+    border: none;
+}
+
+.form-check-input:checked {
+    background-color: #ffc107;
+    box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
+    border: 1px solid white;
+}
+
+.form-control:focus {
+    border-color: #ffc107;
+    box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
+}
+
+@media (max-width: 992px) {
+    .titleDesc {
+        margin-left: 0rem !important;
+    }
+
+    .editProPage {
+        padding: 5rem 10rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .titleDesc {
+        margin-left: 0rem !important;
+        margin-bottom: 3rem;
+        margin-top: 0 !important;
+    }
+
+    .date {
+        display: flex;
+        justify-content: start;
+    }
+
+    .btnHelp .list-group {
+        display: none;
+    }
+
+    .listMenu {
+        width: 18rem;
+    }
+
+    .editProPage {
+        padding: 0px 1rem;
+    }
+
+    .btndd {
+        background-color: transparent;
+        width: 100%;
+        color: #3f3a3a;
+    }
+
+    .nav-tabs .nav-link {
+        font-size: 1.2rem;
+    }
+
+    .text {
+        margin-top: 1rem;
+    }
+}

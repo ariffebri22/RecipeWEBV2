@@ -1,0 +1,30 @@
+.modal-content {
+    background-color: #fff;
+    border: none;
+    text-align: center;
+    padding: 20px;
+}
+
+.modal-header {
+    border-bottom: none;
+}
+
+.modal-body {
+    color: #ffc107;
+    font-size: 24px;
+}
+
+.modal-footer {
+    border-top: none;
+    text-align: center;
+}
+
+.btnYes {
+    width: 20rem;
+}
+
+.btnCancel {
+    width: 20rem;
+    background-color: #e7e7e7;
+    border: none;
+}

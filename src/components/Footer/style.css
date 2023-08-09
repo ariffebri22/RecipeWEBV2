@@ -1,0 +1,31 @@
+footer {
+    height: auto;
+    margin-top: 6rem;
+}
+
+footer p {
+    color: #2e266f;
+    font-size: 3rem;
+    font-weight: normal;
+}
+
+footer h6 {
+    color: #707070;
+}
+
+.list {
+    margin-top: 10rem;
+    font-size: small;
+}
+
+.list li {
+    color: #707070;
+}
+
+.text {
+    height: 100%;
+}
+
+.eat {
+    margin-top: 8rem;
+}

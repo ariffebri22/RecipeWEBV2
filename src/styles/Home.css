@@ -1,0 +1,443 @@
+* {
+    font-family: "Poppins", arial;
+    font-weight: 500;
+}
+
+#homee {
+    margin-top: 7rem !important;
+}
+
+#homee h1 {
+    font-size: 3rem;
+    color: #2e266f;
+}
+
+#homee img {
+    transition: 0.4s;
+}
+
+.navbar {
+    background-color: transparent;
+    transition: background-color 0.3s;
+}
+
+/* CSS untuk mengatur background navbar saat di-scroll */
+.navbar-scrolled {
+    background-color: #fff;
+}
+
+.imgCover {
+    overflow: hidden;
+    width: 440px;
+}
+
+.imgCover img {
+    width: 100%;
+    height: 100%;
+    transition: scale 400ms;
+}
+
+.imgCover img:hover {
+    scale: 120%;
+    cursor: pointer;
+}
+
+.photo img {
+    cursor: pointer;
+}
+
+.user::before {
+    content: "";
+    display: block;
+    width: 5px;
+    height: 3rem;
+    background-color: white;
+    margin-right: 1rem;
+}
+
+.side {
+    position: absolute;
+    width: 20rem;
+    height: 50rem;
+    z-index: -99;
+    right: 0;
+    top: 0;
+}
+
+.inputSearchh {
+    width: 27em !important;
+    height: 3em;
+    /* background-color: #efefef; */
+}
+
+.inputSearchh input {
+    border-left: none;
+    font-size: small !important;
+    text-transform: capitalize;
+    margin: 0;
+}
+
+.inputSearchh input::placeholder {
+    color: #b6b6b6;
+}
+
+#popularforyou {
+    margin-top: 13rem;
+}
+
+#popularforyou h3 {
+    color: #3f3a3a;
+}
+
+.ssquare {
+    width: auto;
+}
+
+.square {
+    height: 4.5rem;
+    width: 1rem;
+}
+
+.circle {
+    margin-top: 18rem;
+}
+
+.circle1 {
+    display: flex;
+    align-items: center;
+    width: 100px;
+}
+
+.circle2 {
+    display: flex;
+    align-items: center;
+    width: 100px;
+    margin-top: 20px;
+}
+
+.circle-round {
+    background-color: #e6e6e6;
+    width: 8px;
+    height: 8px;
+    margin-left: 20px;
+}
+
+.squareborder {
+    background-color: transparent;
+    border: 2px solid #efc81a;
+    width: 22rem;
+    height: 26rem;
+    z-index: -99;
+    margin-left: 11rem;
+    margin-top: 4rem;
+}
+
+.content {
+    margin: auto;
+    width: 20rem;
+    color: #3f3a3a;
+}
+
+.content p {
+    font-size: 12px;
+}
+
+.content button {
+    font-size: 12px;
+    color: white;
+    width: 7rem;
+    height: 3rem;
+}
+
+#newrecipe {
+    margin-top: 13rem;
+}
+
+#newrecipe h3 {
+    color: #3f3a3a;
+}
+
+.squaresolid {
+    width: 21rem;
+    height: 29rem;
+    z-index: -99;
+    left: 0;
+}
+
+#popularrecipe {
+    margin-top: 13rem;
+}
+
+#popularrecipe h3 {
+    color: #3f3a3a;
+}
+
+.image1 {
+    /* background-color: red; */
+    width: 15rem;
+    height: 15rem;
+    position: relative;
+}
+
+.image1 img {
+    width: 100%;
+    z-index: -1;
+    position: absolute;
+}
+
+.image1 p {
+    color: #3f3a3a;
+    font-size: 15px;
+    margin-top: 11rem;
+    margin-left: 1rem;
+    z-index: 1;
+}
+
+.image2 {
+    width: 15rem;
+    height: 15rem;
+    position: relative;
+}
+
+.image2 img {
+    width: 100%;
+    z-index: -1;
+    position: absolute;
+}
+
+.image2 p {
+    color: #3f3a3a;
+    font-size: 15px;
+    margin-top: 11rem;
+    margin-left: 1rem;
+}
+
+.image3 {
+    width: 15rem;
+    height: 15rem;
+    position: relative;
+}
+
+.image3 img {
+    width: 100%;
+    z-index: -1;
+    position: absolute;
+}
+
+.image3 p {
+    color: #3f3a3a;
+    font-size: 15px;
+    margin-top: 11rem;
+    margin-left: 1rem;
+}
+
+.image4 {
+    width: 15rem;
+    height: 15rem;
+    position: relative;
+}
+
+.image4 img {
+    width: 100%;
+    z-index: -1;
+    position: absolute;
+}
+
+.image4 p {
+    color: #3f3a3a;
+    font-size: 15px;
+    margin-top: 11rem;
+    margin-left: 1rem;
+}
+
+.image5 {
+    width: 15rem;
+    height: 15rem;
+    position: relative;
+}
+
+.image5 img {
+    width: 100%;
+    z-index: -1;
+    position: absolute;
+}
+
+.image5 p {
+    color: #3f3a3a;
+    font-size: 15px;
+    margin-top: 11rem;
+    margin-left: 1rem;
+}
+
+.image6 {
+    width: 15rem;
+    height: 15rem;
+    position: relative;
+}
+
+.image6 img {
+    width: 100%;
+    z-index: -1;
+    position: absolute;
+}
+
+.image6 p {
+    color: #3f3a3a;
+    font-size: 15px;
+    margin-top: 11rem;
+    margin-left: 1rem;
+}
+
+footer {
+    height: auto;
+    margin-top: 13rem;
+}
+
+footer p {
+    color: #2e266f;
+    font-size: 3rem;
+    font-weight: normal;
+}
+
+footer h6 {
+    color: #707070;
+}
+
+.list {
+    margin-top: 10rem;
+    font-size: small;
+}
+
+.list li {
+    color: #707070;
+}
+
+.text {
+    height: 100%;
+}
+
+.eat {
+    margin-top: 8rem;
+}
+
+.modal-content {
+    background-color: #fff;
+    border: none;
+    text-align: center;
+    padding: 20px;
+}
+
+.modal-header {
+    border-bottom: none;
+}
+
+.modal-body {
+    color: #ffc107; /* Warna kuning */
+    font-size: 24px;
+}
+
+.modal-footer {
+    border-top: none;
+    text-align: center;
+}
+
+.btnYes {
+    width: 20rem;
+}
+
+.btnCancel {
+    width: 20rem;
+    background-color: #e7e7e7;
+    border: none;
+}
+
+.form-check-input:checked {
+    background-color: #ffc107;
+    box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
+    border: 1px solid white;
+}
+
+.form-control:focus {
+    border-color: #ffc107;
+    box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
+}
+
+@media (min-width: 1444px) {
+    body {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+@media (max-width: 992px) {
+    .side {
+        width: 17rem;
+        height: 44rem;
+    }
+
+    #homee h1 {
+        font-size: 2.2rem !important;
+    }
+
+    .inputSearchh {
+        width: 19rem !important;
+    }
+
+    .imgCover {
+        width: 18rem;
+    }
+
+    #popularforyou img {
+        width: 18rem;
+    }
+
+    .squareborder {
+        margin-left: 6rem;
+        margin-top: 2rem;
+        width: 17rem;
+        height: 18rem;
+    }
+
+    .content {
+        margin-left: 5rem;
+        margin-top: 3rem;
+        width: 15rem;
+    }
+
+    #newrecipe img {
+        width: 18rem;
+    }
+
+    .squaresolid {
+        width: 15rem;
+        height: 19rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .first {
+        margin-top: 5rem;
+    }
+
+    .first h1 {
+        font-size: 2rem !important;
+    }
+
+    .side {
+        display: none;
+    }
+
+    .user::before {
+        background-color: #efc81a;
+    }
+
+    .first .row {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    .imgCover {
+        margin-bottom: 2rem;
+    }
+}

@@ -1,0 +1,23 @@
+.navbar {
+    background-color: transparent;
+    transition: background-color 0.4s;
+}
+
+.navbar-scrolled {
+    background-color: #fff;
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); */
+}
+
+* {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+}
+
+.user::before {
+    content: "";
+    display: block;
+    width: 5px;
+    height: 3rem;
+    background-color: #efc81a;
+    margin-right: 1rem;
+}

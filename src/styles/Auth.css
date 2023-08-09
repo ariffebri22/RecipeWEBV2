@@ -1,0 +1,102 @@
+* {
+    font-family: "Poppins", arial;
+}
+
+p {
+    color: #8692a6;
+}
+
+form {
+    font-size: 13px;
+}
+
+form .btn {
+    width: 100%;
+    font-size: small;
+}
+
+#exampleInputName1 {
+    font-size: 13px;
+    height: 3rem;
+}
+
+#exampleInputEmail1 {
+    font-size: 13px;
+    height: 3rem;
+}
+
+#exampleInputPassword1 {
+    font-size: 13px;
+    height: 3rem;
+}
+
+.head p {
+    font-size: small;
+}
+
+.have p {
+    font-size: x-small;
+}
+
+.forgot p {
+    font-size: x-small;
+}
+
+.pageMain {
+    width: 50%;
+}
+
+.modal-content {
+    background-color: #fff;
+    border: none;
+    text-align: center;
+    padding: 20px;
+}
+
+.modal-header {
+    border-bottom: none;
+}
+
+.modal-body {
+    color: #ffc107;
+    font-size: 24px;
+}
+
+.modal-footer {
+    border-top: none;
+    text-align: center;
+}
+
+.btnYes {
+    width: 20rem;
+}
+
+.btnCancel {
+    width: 20rem;
+    background-color: #e7e7e7;
+    border: none;
+}
+
+.form-check-input:checked {
+    background-color: #ffc107 !important;
+    box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25) !important;
+    border: 1px solid white !important;
+}
+
+.form-control:focus {
+    border-color: #ffc107 !important;
+    box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25) !important;
+}
+
+@media (max-width: 992px) {
+    .pageMain {
+        width: 50rem;
+        margin-top: 10rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .pageMain {
+        margin-top: 1rem;
+    }
+}
