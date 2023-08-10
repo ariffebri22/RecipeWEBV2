@@ -5,9 +5,10 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import Alert from "../../components/Alert";
 import LoadingButton from "../../components/BtnLoading";
 import "../../styles/EditMenu.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 let token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyaWVsQGdtYWlsLmNvbSIsInVzZXJzX0lkIjoyOSwidHlwZSI6InVzZXIiLCJ1c2VybmFtZSI6IkFyaWVsIiwicGhvdG8iOiJodHRwczovL3Jlcy5jbG91ZGluYXJ5LmNvbS9ka2lmdGphYmwvaW1hZ2UvdXBsb2FkL3YxNjkxNDk1NTQ0L1JlY2lwZUFQSVYyL3Bob3RvLTE2OTE0OTU1NDE2NjktNDc5NTYxMzMxX25xMzByeS5qcGciLCJpYXQiOjE2OTE0OTc4Nzl9.4Av67CtTEaTONK5rojiARa9IWrynZS1drdcN3RRuFbs";
@@ -22,12 +23,6 @@ const EditMenu = () => {
         ingredients: "",
         category_id: "",
         photo: "",
-    });
-
-    const [showAlert, setShowAlert] = useState(false);
-    const [alertData, setAlertData] = useState({
-        type: "",
-        message: "",
     });
 
     useEffect(() => {
@@ -55,11 +50,9 @@ const EditMenu = () => {
         event.preventDefault();
 
         if (!inputData.title || !inputData.ingredients || !inputData.category_id || !photo) {
-            setAlertData({ ...alertData, type: "warning", message: "Please fill in all the required fields and add a photo." });
-            setShowAlert(true);
-            setTimeout(() => {
-                setAlertData({ type: "", message: "" });
-            }, 4000);
+            toast.warn("Please fill in all the required fields and add a photo.", {
+                hideProgressBar: true,
+            });
             return;
         }
 
@@ -83,16 +76,18 @@ const EditMenu = () => {
             })
             .then((res) => {
                 console.log(res);
-                setAlertData({ ...alertData, type: "success", message: "Recipe Succesfully Changed!" });
-                setShowAlert(true);
+                toast.success("Recipe Succesfully Changed!", {
+                    autoClose: 1000,
+                });
                 setTimeout(() => {
                     navigate("/profile");
-                }, 3000);
+                }, 2000);
             })
             .catch((err) => {
                 console.log(err);
-                setAlertData({ ...alertData, type: "danger", message: err.response.data.message });
-                setShowAlert(true);
+                toast.error(err.response.data.message, {
+                    hideProgressBar: true,
+                });
             })
             .finally(() => {
                 setIsLoading(false);
@@ -131,7 +126,6 @@ const EditMenu = () => {
         <>
             <Navbar />
             <section id="home text" className="text-center d-flex justify-content-center">
-                {showAlert && <Alert type={alertData.type} message={alertData.message} />}
                 <div className="container">
                     <div className="row">
                         <div className="col-md-2"></div>
@@ -172,6 +166,7 @@ const EditMenu = () => {
                 </div>
             </section>
             <Footer />
+            <ToastContainer />
         </>
     );
 };

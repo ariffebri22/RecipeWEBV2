@@ -7,6 +7,8 @@ import Footer from "../../components/Footer";
 import Alert from "../../components/Alert";
 import LoadingButton from "../../components/BtnLoading";
 import "../../styles/AddMenu.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 let token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyaWVsQGdtYWlsLmNvbSIsInVzZXJzX0lkIjoyOSwidHlwZSI6InVzZXIiLCJ1c2VybmFtZSI6IkFyaWVsIiwicGhvdG8iOiJodHRwczovL3Jlcy5jbG91ZGluYXJ5LmNvbS9ka2lmdGphYmwvaW1hZ2UvdXBsb2FkL3YxNjkxNDk1NTQ0L1JlY2lwZUFQSVYyL3Bob3RvLTE2OTE0OTU1NDE2NjktNDc5NTYxMzMxX25xMzByeS5qcGciLCJpYXQiOjE2OTE0OTc4Nzl9.4Av67CtTEaTONK5rojiARa9IWrynZS1drdcN3RRuFbs";
@@ -31,11 +33,10 @@ const AddMenu = () => {
         event.preventDefault();
 
         if (!inputData.title || !inputData.ingredients || !inputData.category_id || !photo) {
-            setAlertData({ ...alertData, type: "warning", message: "Please fill in all the required fields and add a photo." });
-            setShowAlert(true);
-            setTimeout(() => {
-                setAlertData({ type: "", message: "" });
-            }, 4000);
+            toast.warn("Please fill in all the required fields and add a photo.", {
+                hideProgressBar: true,
+                autoClose: 2000,
+            });
             return;
         }
 
@@ -56,19 +57,21 @@ const AddMenu = () => {
             })
             .then((res) => {
                 console.log(res);
-                setShowAlert(true);
                 setInputData({ title: "", ingredients: "", category_id: "", photo: "" });
                 setPhoto(null);
-                setAlertData({ ...alertData, type: "success", message: "Recipe Succesfully Added!" });
-                setShowAlert(true);
+                toast.success("Recipe Succesfully Added!", {
+                    autoClose: 1500,
+                });
                 setTimeout(() => {
                     navigate("/search");
-                }, 3000);
+                }, 2000);
             })
             .catch((err) => {
                 console.log(err);
-                setAlertData({ ...alertData, type: "danger", message: "Recipe Succesfully Failed!" });
-                setShowAlert(true);
+                toast.warn(err.response.data.message, {
+                    hideProgressBar: true,
+                    autoClose: 2000,
+                });
             })
             .finally(() => {
                 setIsLoading(false);
@@ -146,6 +149,7 @@ const AddMenu = () => {
                 </div>
             </section>
             <Footer />
+            <ToastContainer />
         </>
     );
 };

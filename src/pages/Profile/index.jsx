@@ -6,8 +6,9 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import BtnDeleting from "../../components/BtnDeleting";
 import "../../styles/Profile.css";
-import Alert from "../../components/Alert";
 import imageProfile from "../../assets/img/profile.png";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 let token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyaWVsQGdtYWlsLmNvbSIsInVzZXJzX0lkIjoyOSwidHlwZSI6InVzZXIiLCJ1c2VybmFtZSI6IkFyaWVsIiwicGhvdG8iOiJodHRwczovL3Jlcy5jbG91ZGluYXJ5LmNvbS9ka2lmdGphYmwvaW1hZ2UvdXBsb2FkL3YxNjkxNDk1NTQ0L1JlY2lwZUFQSVYyL3Bob3RvLTE2OTE0OTU1NDE2NjktNDc5NTYxMzMxX25xMzByeS5qcGciLCJpYXQiOjE2OTE0OTc4Nzl9.4Av67CtTEaTONK5rojiARa9IWrynZS1drdcN3RRuFbs";
@@ -19,11 +20,6 @@ const Profile = () => {
     const [loading, setLoading] = useState(false);
     const [recipeLoadingStates, setRecipeLoadingStates] = useState({});
     const recipesPerPage = 5;
-    const [showAlert, setShowAlert] = useState(false);
-    const [alertData, setAlertData] = useState({
-        type: "",
-        message: "",
-    });
 
     useEffect(() => {
         axios
@@ -75,11 +71,9 @@ const Profile = () => {
                             ...prevStates,
                             [recipeId]: false,
                         }));
-                        setAlertData({ ...alertData, type: "success", message: "Delete Success!" });
-                        setShowAlert(true);
-                        setTimeout(() => {
-                            setShowAlert(false);
-                        }, 4000);
+                        toast.success("Delete Success!", {
+                            autoClose: 1000,
+                        });
                     })
                     .catch((err) => {
                         console.log(err);
@@ -91,11 +85,9 @@ const Profile = () => {
             })
             .catch((err) => {
                 console.log(err);
-                setAlertData({ ...alertData, type: "warning", message: err.response.data.message });
-                setShowAlert(true);
-                setTimeout(() => {
-                    setShowAlert(false);
-                }, 4000);
+                toast.error(err.response.data.message, {
+                    hideProgressBar: true,
+                });
                 setRecipeLoadingStates((prevStates) => ({
                     ...prevStates,
                     [recipeId]: false,
@@ -133,7 +125,6 @@ const Profile = () => {
         <>
             <Navbar />
             <section id="home text" className=" d-flex justify-content-center">
-                {showAlert && <Alert type={alertData.type} message={alertData.message} />}
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6 headUser">
@@ -241,6 +232,7 @@ const Profile = () => {
                 </div>
             </section>
             <Footer />
+            <ToastContainer />
         </>
     );
 };
