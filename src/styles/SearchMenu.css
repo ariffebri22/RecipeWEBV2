@@ -206,6 +206,11 @@
     cursor: pointer;
 }
 
+.author img {
+    width: 40px;
+    height: 40px;
+}
+
 .btncomment {
     width: 20rem;
     height: 2.5rem;

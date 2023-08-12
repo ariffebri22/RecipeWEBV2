@@ -7,41 +7,21 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import "../../styles/SearchMenu.css";
 import myImage from "../../assets/img/profile.png";
-
-let token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyaWVsQGdtYWlsLmNvbSIsInVzZXJzX0lkIjoyOSwidHlwZSI6InVzZXIiLCJ1c2VybmFtZSI6IkFyaWVsIiwicGhvdG8iOiJodHRwczovL3Jlcy5jbG91ZGluYXJ5LmNvbS9ka2lmdGphYmwvaW1hZ2UvdXBsb2FkL3YxNjkxNDk1NTQ0L1JlY2lwZUFQSVYyL3Bob3RvLTE2OTE0OTU1NDE2NjktNDc5NTYxMzMxX25xMzByeS5qcGciLCJpYXQiOjE2OTE0OTc4Nzl9.4Av67CtTEaTONK5rojiARa9IWrynZS1drdcN3RRuFbs";
+import { getMenu } from "../../store/action/menu";
+import { useDispatch, useSelector } from "react-redux";
 
 const SearchMenu = () => {
     const navigate = useNavigate();
-    const [data, setData] = useState([]);
-    const [showAlert, setShowAlert] = useState(false);
-    const [alertData, setAlertData] = useState({ message: "" });
     const [searchTerm, setSearchTerm] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [categoryFilter, setCategoryFilter] = useState("");
-    const [creatorFilter, setCreatorFilter] = useState("");
+    const dispatch = useDispatch();
+    const { menu } = useSelector((state) => state);
+    const { isError, errorMessage, isLoading, data } = menu;
     const recipesPerPage = 5;
 
-    const getData = () => {
-        axios
-            .get(`${import.meta.env.VITE_REACT_APP_SERVER}/recipe`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            .then((res) => {
-                console.log(res);
-                setData(res.data.data);
-                setAlertData({ ...alertData, message: "berhasil get data" });
-                setShowAlert(true);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    };
-
     useEffect(() => {
-        getData();
+        dispatch(getMenu());
     }, []);
 
     const getFirst10Words = (sentence) => {
@@ -57,17 +37,14 @@ const SearchMenu = () => {
         setCurrentPage(1);
     };
 
-    const handleCreatorFilterChange = (creator) => {
-        setCreatorFilter(creator);
-        setCurrentPage(1);
-    };
-
-    const filteredRecipes = data.filter((item) => {
-        const isTitleMatch = item.title.toLowerCase().includes(searchTerm.toLowerCase());
-        const isCreatorMatch = item.creator.toLowerCase().includes(searchTerm.toLowerCase());
-        const isCategoryMatch = categoryFilter === "" || item.category.toLowerCase() === categoryFilter.toLowerCase();
-        return (isTitleMatch || isCreatorMatch) && isCategoryMatch;
-    });
+    const filteredRecipes = data
+        ? data.filter((item) => {
+              const isTitleMatch = item.title.toLowerCase().includes(searchTerm.toLowerCase());
+              const isCreatorMatch = item.creator.toLowerCase().includes(searchTerm.toLowerCase());
+              const isCategoryMatch = categoryFilter === "" || item.category.toLowerCase() === categoryFilter.toLowerCase();
+              return (isTitleMatch || isCreatorMatch) && isCategoryMatch;
+          })
+        : [];
 
     const indexOfLastRecipe = currentPage * recipesPerPage;
     const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
@@ -147,7 +124,7 @@ const SearchMenu = () => {
                                     10 Likes - 12 Comment - 3 Bookmark
                                 </button>
                                 <div className="author mt-3 d-flex">
-                                    <img src={myImage} alt="Search" width={40} className="me-3 rounded-circle" />
+                                    <img src={item.creator_photo} alt="Search" className="me-3 rounded-circle" />
                                     <h6 className="mt-2 text-capitalize">{item.creator}</h6>
                                 </div>
                             </div>

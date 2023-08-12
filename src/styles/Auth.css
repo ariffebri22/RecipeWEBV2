@@ -10,7 +10,7 @@ form {
     font-size: 13px;
 }
 
-form .btn {
+form .btnRegis {
     width: 100%;
     font-size: small;
 }
@@ -32,6 +32,14 @@ form .btn {
 
 .head p {
     font-size: small;
+}
+
+.head img {
+    width: 80px;
+}
+
+#button-addon2 img {
+    width: 24px;
 }
 
 .have p {
@@ -86,6 +94,55 @@ form .btn {
 .form-control:focus {
     border-color: #ffc107 !important;
     box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25) !important;
+}
+
+.form-control:focus .btnSvg {
+    border-color: #ffc107 !important;
+    box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25) !important;
+}
+
+.password-strength-bar {
+    width: 0;
+    height: 10px;
+    margin-top: 5px;
+    transition: all 0.3s;
+}
+
+.password-strength-bar {
+    width: 100%;
+    height: 4px;
+    background-color: #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.password-strength-bar-inner {
+    height: 100%;
+    transition: width 0.3s, background-color 0.3s, box-shadow 0.3s;
+}
+
+.start .password-strength-bar-inner {
+    width: 0%;
+    background-color: white;
+    box-shadow: 0px 2px 5px white;
+}
+
+.weak .password-strength-bar-inner {
+    width: 30%;
+    background-color: #dc3545;
+    box-shadow: 0px 2px 5px #dc3545;
+}
+
+.medium .password-strength-bar-inner {
+    width: 60%;
+    background-color: #f0cc2b;
+    box-shadow: 0px 2px 5px #f0cc2b;
+}
+
+.strong .password-strength-bar-inner {
+    width: 100%;
+    background-color: #198754;
+    box-shadow: 0px 5px 5px #198754;
 }
 
 @media (max-width: 992px) {

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
@@ -9,25 +9,31 @@ import LoadingButton from "../../components/BtnLoading";
 import "../../styles/AddMenu.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-let token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyaWVsQGdtYWlsLmNvbSIsInVzZXJzX0lkIjoyOSwidHlwZSI6InVzZXIiLCJ1c2VybmFtZSI6IkFyaWVsIiwicGhvdG8iOiJodHRwczovL3Jlcy5jbG91ZGluYXJ5LmNvbS9ka2lmdGphYmwvaW1hZ2UvdXBsb2FkL3YxNjkxNDk1NTQ0L1JlY2lwZUFQSVYyL3Bob3RvLTE2OTE0OTU1NDE2NjktNDc5NTYxMzMxX25xMzByeS5qcGciLCJpYXQiOjE2OTE0OTc4Nzl9.4Av67CtTEaTONK5rojiARa9IWrynZS1drdcN3RRuFbs";
+import { postMenu } from "../../store/action/menu";
+import { useDispatch, useSelector } from "react-redux";
 
 const AddMenu = () => {
     const navigate = useNavigate();
     const [photo, setPhoto] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
+    const dispatch = useDispatch();
+    const { errorMessage, isError, isLoading } = useSelector((state) => state.postMenu);
     const [inputData, setInputData] = useState({
         title: "",
         ingredients: "",
         category_id: "",
         photo: "",
     });
-    const [showAlert, setShowAlert] = useState(false);
-    const [alertData, setAlertData] = useState({
-        type: "",
-        message: "",
-    });
+
+    useEffect(() => {
+        if (isError && errorMessage) {
+            toast.warn(errorMessage, {
+                hideProgressBar: true,
+                autoClose: 2000,
+            });
+        } else if (isError && !errorMessage) {
+            toast.error("Something wrong");
+        }
+    }, [isError, errorMessage]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -40,42 +46,13 @@ const AddMenu = () => {
             return;
         }
 
-        setIsLoading(true);
-
         let bodyFormData = new FormData();
         bodyFormData.append("title", inputData.title);
         bodyFormData.append("ingredients", inputData.ingredients);
         bodyFormData.append("category_id", inputData.category_id);
         bodyFormData.append("photo", photo);
 
-        axios
-            .post(`${import.meta.env.VITE_REACT_APP_SERVER}/recipe`, bodyFormData, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "multipart/form-data",
-                },
-            })
-            .then((res) => {
-                console.log(res);
-                setInputData({ title: "", ingredients: "", category_id: "", photo: "" });
-                setPhoto(null);
-                toast.success("Recipe Succesfully Added!", {
-                    autoClose: 1500,
-                });
-                setTimeout(() => {
-                    navigate("/search");
-                }, 2000);
-            })
-            .catch((err) => {
-                console.log(err);
-                toast.warn(err.response.data.message, {
-                    hideProgressBar: true,
-                    autoClose: 2000,
-                });
-            })
-            .finally(() => {
-                setIsLoading(false);
-            });
+        dispatch(postMenu(bodyFormData, navigate));
     };
 
     function previewImage(event) {
@@ -110,7 +87,6 @@ const AddMenu = () => {
         <>
             <Navbar />
             <section id="home text" className="text-center d-flex justify-content-center">
-                {showAlert && <Alert type={alertData.type} message={alertData.message} />}
                 <div className="container text-center">
                     <div className="row mt-3">
                         <div className="col-md-2"></div>

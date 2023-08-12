@@ -21,3 +21,7 @@
     background-color: #efc81a;
     margin-right: 1rem;
 }
+
+.photo img {
+    width: 40px !important;
+}

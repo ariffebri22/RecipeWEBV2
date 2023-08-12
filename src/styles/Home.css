@@ -70,6 +70,10 @@
     /* background-color: #efefef; */
 }
 
+.inputSearchh img {
+    width: 20px;
+}
+
 .inputSearchh input {
     border-left: none;
     font-size: small !important;
@@ -132,10 +136,16 @@
     margin-top: 4rem;
 }
 
+.imageContent img {
+    width: 440px;
+}
+
 .content {
     margin: auto;
     width: 20rem;
     color: #3f3a3a;
+    /* background-color: red; */
+    text-align: left !important;
 }
 
 .content p {

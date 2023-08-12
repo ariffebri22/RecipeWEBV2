@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import BtnDeleting from "../../components/BtnDeleting";
+import Modal from "../../components/Modal";
 import "../../styles/Profile.css";
 import imageProfile from "../../assets/img/profile.png";
 import { ToastContainer, toast } from "react-toastify";
@@ -19,6 +20,7 @@ const Profile = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [loading, setLoading] = useState(false);
     const [recipeLoadingStates, setRecipeLoadingStates] = useState({});
+    const [openModal, setOpenModal] = useState(false);
     const recipesPerPage = 5;
 
     useEffect(() => {
@@ -197,7 +199,7 @@ const Profile = () => {
                                             <button type="button" className="btn me-2 btn-primary btnEdit" onClick={() => handleEditMenu(recipe.id)}>
                                                 Edit Menu
                                             </button>
-                                            <BtnDeleting type="submit" className="btn me-2 btn-danger btnDelete" isLoading={recipeLoadingStates[recipe.id]} onClick={() => handleDeleteMenu(recipe.id)}>
+                                            <BtnDeleting type="submit" className="btn me-2 btn-danger btnDelete" isLoading={recipeLoadingStates[recipe.id]} onClick={() => setOpenModal(true)}>
                                                 Delete Menu
                                             </BtnDeleting>
                                         </div>
@@ -233,6 +235,7 @@ const Profile = () => {
             </section>
             <Footer />
             <ToastContainer />
+            <Modal open={openModal} onClose={() => setOpenModal(false)} />
         </>
     );
 };

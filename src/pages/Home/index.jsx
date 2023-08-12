@@ -68,7 +68,7 @@ const Home = () => {
                         </div>
                     </div>
                     <div className="row mt-5">
-                        <div className="col-md-6 mt-5 mb-5" data-aos="fade-right" data-aos-duration="2000">
+                        <div className="col-md-6 mt-5 mb-5 imageContent" data-aos="fade-right" data-aos-duration="2000">
                             <div className="squareborder position-absolute rounded-3"></div>
                             <img src={image2} alt="Image 2" width="450" className="rounded-3 ms-5" />
                         </div>
@@ -96,7 +96,7 @@ const Home = () => {
                         </div>
                     </div>
                     <div className="row mt-5">
-                        <div className="col-md-6 mt-5 mb-5">
+                        <div className="col-md-6 mt-5 mb-5 imageContent">
                             <div className="squaresolid position-absolute bg-warning" data-aos="fade-right" data-aos-duration="2000"></div>
                             <img src={image3} alt="Image 3" width="450" className="rounded-3 ms-5 mt-5" data-aos="fade-right" data-aos-duration="2000" />
                         </div>

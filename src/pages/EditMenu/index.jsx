@@ -1,23 +1,37 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { getMenuDetail, updateMenu } from "../../store/action/menu";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import LoadingButton from "../../components/BtnLoading";
-import "../../styles/EditMenu.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-let token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyaWVsQGdtYWlsLmNvbSIsInVzZXJzX0lkIjoyOSwidHlwZSI6InVzZXIiLCJ1c2VybmFtZSI6IkFyaWVsIiwicGhvdG8iOiJodHRwczovL3Jlcy5jbG91ZGluYXJ5LmNvbS9ka2lmdGphYmwvaW1hZ2UvdXBsb2FkL3YxNjkxNDk1NTQ0L1JlY2lwZUFQSVYyL3Bob3RvLTE2OTE0OTU1NDE2NjktNDc5NTYxMzMxX25xMzByeS5qcGciLCJpYXQiOjE2OTE0OTc4Nzl9.4Av67CtTEaTONK5rojiARa9IWrynZS1drdcN3RRuFbs";
+import "../../styles/EditMenu.css";
 
 const EditMenu = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const { detailMenu, putMenu } = useSelector((state) => state);
+    const { data } = detailMenu;
+    const { isLoading, isError, errorMessage } = putMenu;
+
+    useEffect(() => {
+        if (isError && errorMessage) {
+            toast.warn(errorMessage, {
+                hideProgressBar: true,
+                autoClose: 2000,
+            });
+        } else if (isError && !errorMessage) {
+            toast.error("Something wrong");
+        }
+    }, [isError, errorMessage]);
+
     const [photo, setPhoto] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
     const [inputData, setInputData] = useState({
         title: "",
         ingredients: "",
@@ -26,25 +40,19 @@ const EditMenu = () => {
     });
 
     useEffect(() => {
-        axios
-            .get(`${import.meta.env.VITE_REACT_APP_SERVER}/recipe/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            .then((res) => {
-                console.log(res);
-                setInputData({
-                    title: res.data.data.title,
-                    ingredients: res.data.data.ingredients,
-                    category_id: res.data.data.category_id,
-                    photo: res.data.data.photo,
-                });
-            })
-            .catch((err) => {
-                console.log(err);
+        dispatch(getMenuDetail(id));
+    }, [dispatch, id]);
+
+    useEffect(() => {
+        if (data) {
+            setInputData({
+                title: data.title,
+                ingredients: data.ingredients,
+                category_id: data.category_id,
+                photo: data.photo,
             });
-    }, [id]);
+        }
+    }, [data]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -56,69 +64,28 @@ const EditMenu = () => {
             return;
         }
 
-        setIsLoading(true);
-
-        let bodyFormData = new FormData();
-        bodyFormData.append("title", inputData.title);
-        bodyFormData.append("ingredients", inputData.ingredients);
-        bodyFormData.append("category_id", inputData.category_id);
+        let formData = new FormData();
+        formData.append("title", inputData.title);
+        formData.append("ingredients", inputData.ingredients);
+        formData.append("category_id", inputData.category_id);
 
         if (photo) {
-            bodyFormData.append("photo", photo);
+            formData.append("photo", photo);
         }
 
-        axios
-            .put(`${import.meta.env.VITE_REACT_APP_SERVER}/recipe/${id}`, bodyFormData, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "multipart/form-data",
-                },
-            })
-            .then((res) => {
-                console.log(res);
-                toast.success("Recipe Succesfully Changed!", {
-                    autoClose: 1000,
-                });
-                setTimeout(() => {
-                    navigate("/profile");
-                }, 2000);
-            })
-            .catch((err) => {
-                console.log(err);
-                toast.error(err.response.data.message, {
-                    hideProgressBar: true,
-                });
-            })
-            .finally(() => {
-                setIsLoading(false);
-            });
+        dispatch(updateMenu(formData, id, navigate));
     };
 
     const previewImage = (event) => {
         const fileInput = event.target;
-        const imagePreview = document.getElementById("imagePreview");
-
-        while (imagePreview.firstChild) {
-            imagePreview.removeChild(imagePreview.firstChild);
-        }
-
-        const image = document.createElement("img");
-        image.src = URL.createObjectURL(fileInput.files[0]);
-        imagePreview.appendChild(image);
-        imagePreview.style.display = "block";
-
-        const uploadLabel = document.getElementById("uploadLabel");
-        uploadLabel.innerText = "Change Photo";
-
         setPhoto(fileInput.files[0]);
     };
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-        const intValue = name === "category_id" ? parseInt(value, 10) : value;
         setInputData((prevData) => ({
             ...prevData,
-            [name]: intValue,
+            [name]: value,
         }));
     };
 
@@ -136,7 +103,7 @@ const EditMenu = () => {
                                         Change Photo
                                     </label>
                                     <div className="image-preview " id="imagePreview">
-                                        {inputData.photo && <img src={inputData.photo} alt="Preview" />}
+                                        {photo ? <img src={URL.createObjectURL(photo)} alt="Preview" /> : inputData.photo && <img src={inputData.photo} alt="Preview" />}
                                     </div>
                                 </div>
                                 <input type="file" className="form-control visually-hidden" id="imageUpload" accept="image/*" onChange={previewImage} name="photo" />
