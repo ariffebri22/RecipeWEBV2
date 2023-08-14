@@ -1,17 +1,20 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import "../../styles/DetailMenu.css";
-import axios from "axios";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import imageProfile from "../../assets/img/profile.png";
-
-let token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyaWVsQGdtYWlsLmNvbSIsInVzZXJzX0lkIjoyOSwidHlwZSI6InVzZXIiLCJ1c2VybmFtZSI6IkFyaWVsIiwicGhvdG8iOiJodHRwczovL3Jlcy5jbG91ZGluYXJ5LmNvbS9ka2lmdGphYmwvaW1hZ2UvdXBsb2FkL3YxNjkxNDk1NTQ0L1JlY2lwZUFQSVYyL3Bob3RvLTE2OTE0OTU1NDE2NjktNDc5NTYxMzMxX25xMzByeS5qcGciLCJpYXQiOjE2OTE0OTc4Nzl9.4Av67CtTEaTONK5rojiARa9IWrynZS1drdcN3RRuFbs";
+import { useSelector, useDispatch } from "react-redux";
+import { getMenuDetail, getMenuByUsers } from "../../store/action/menu";
+import { toast } from "react-toastify";
 
 const DetailMenu = () => {
     const { id } = useParams();
+    const dispatch = useDispatch();
+    const [formattedDate, setFormattedDate] = useState("");
+    const { data, isLoading, isError, errorMessage } = useSelector((state) => state.detMenu);
+    const { data: menuList } = useSelector((state) => state.usersMenu);
     const [recipes, setRecipes] = useState({
         title: "",
         ingredients: [],
@@ -20,28 +23,46 @@ const DetailMenu = () => {
     });
 
     useEffect(() => {
-        axios
-            .get(`${import.meta.env.VITE_REACT_APP_SERVER}/recipe/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            .then((res) => {
-                console.log(res);
-                setRecipes({
-                    title: res.data.data.title,
-                    ingredients: res.data.data.ingredients,
-                    category_id: res.data.data.category_id,
-                    photo: res.data.data.photo,
-                });
-            })
-            .catch((err) => {
-                console.log(err);
+        if (isError && errorMessage) {
+            toast.warn(errorMessage, {
+                hideProgressBar: true,
+                autoClose: 2000,
             });
-    }, [id]);
+        } else if (isError && !errorMessage) {
+            toast.error("Something wrong");
+        }
+    }, [isError, errorMessage]);
 
-    const currentDate = new Date();
-    const formattedDate = currentDate.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" });
+    useEffect(() => {
+        dispatch(getMenuDetail(id));
+    }, [dispatch, id]);
+
+    useEffect(() => {
+        if (data) {
+            setRecipes({
+                title: data.title,
+                ingredients: data.ingredients,
+                category_id: data.category_id,
+                photo: data.photo,
+            });
+
+            const dateString = data.created_at;
+            const date = new Date(dateString);
+            const options = { year: "numeric", month: "long", day: "numeric" };
+            const formattedDate = date.toLocaleDateString("en-US", options);
+            setFormattedDate(formattedDate);
+
+            if (data.users_id) {
+                dispatch(getMenuByUsers(data.users_id));
+            }
+        }
+    }, [data, dispatch]);
+
+    // const numberOfRecipes = menuList.filter((menu) => menu.creator === data.creator).length;
+
+    console.log(menuList);
+
+    // const numberOfRecipes = menuList.filter((menu) => menu.creator === data.creator).length;
 
     return (
         <>
@@ -50,26 +71,24 @@ const DetailMenu = () => {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6 headUser">
-                            <div className="user d-flex align-items-center ps-5">
-                                <div className="photo me-4">
-                                    <img src={imageProfile} alt="Search" width="40" />
+                            {data && (
+                                <div className="user d-flex align-items-center ps-5">
+                                    <div className="photo me-4">
+                                        <img src={data.creator_photo || imageProfile} alt="Profile" width="40" className="rounded-circle" />
+                                    </div>
+                                    <div className="text">
+                                        <p className="mb-0 text-dark">{data.creator || "Unknown"}</p>
+                                        <p className="mb-0">
+                                            <a href="#" className="text-dark">
+                                                <strong>{menuList ? `${menuList.length} Recipe` : "Loading..."}</strong>
+                                            </a>
+                                        </p>
+                                    </div>
                                 </div>
-                                <div className="text">
-                                    <p className="mb-0 text-dark">Ayudia</p>
-                                    <p className="mb-0">
-                                        <a href="#" className="text-dark">
-                                            <strong>10 Recipes</strong>
-                                        </a>
-                                    </p>
-                                </div>
-                            </div>
+                            )}
                         </div>
                         <div className="col-md-6 date">
-                            <div className="d-flex align-items-center pe-5">
-                                <div className="text ps-5">
-                                    <p className="mb-0 text-dark">{formattedDate}</p>
-                                </div>
-                            </div>
+                            <div className="text ps-5">{formattedDate && <p className="mb-0 text-dark">{formattedDate}</p>}</div>
                         </div>
                     </div>
                     <div className="row">

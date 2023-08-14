@@ -4,7 +4,7 @@ import React from "react";
 import nft from "../../assets/img/Rectangle 320.png";
 import "./style.css";
 
-const Modal = ({ open, onClose }) => {
+const Modal = ({ open, onClose, onDelete }) => {
     if (!open) return null;
     return (
         <div onClick={onClose} className="overlay">
@@ -26,9 +26,12 @@ const Modal = ({ open, onClose }) => {
                     </div>
                     <div className="btnContainer">
                         <button className="btnPrimary">
-                            <span className="bold">YES</span>, I love NFTs
+                            <span className="bold" onClick={onDelete}>
+                                YES
+                            </span>
+                            , I love NFTs
                         </button>
-                        <button className="btnOutline">
+                        <button className="btnOutline" onClick={onClose}>
                             <span className="bold">NO</span>, thanks
                         </button>
                     </div>

@@ -1,12 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import "../../styles/SearchMenu.css";
-import myImage from "../../assets/img/profile.png";
 import { getMenu } from "../../store/action/menu";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -59,6 +57,8 @@ const SearchMenu = () => {
     const handleDetailMenu = (recipeId) => {
         navigate(`/detail/${recipeId}`);
     };
+
+    console.log(data);
 
     return (
         <>

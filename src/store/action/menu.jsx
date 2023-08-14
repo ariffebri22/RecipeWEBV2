@@ -24,12 +24,17 @@ export const getMenuByUsers = (id) => async (dispatch) => {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
         };
 
-        dispatch({ type: "DETAIL_MENU_PENDING" });
-        const result = await axios.get(url + `/recipe/users/${id}`, { headers });
-        dispatch({ payload: result.data.data, type: "DETAIL_MENU_SUCCESS" });
+        dispatch({ type: "USERS_MENU_PENDING" });
+        const response = await axios.get(`${url}/recipe/users/${id}`, { headers });
+
+        if (response.status === 200) {
+            dispatch({ payload: response.data.data, type: "USERS_MENU_SUCCESS" });
+        } else {
+            dispatch({ type: "USERS_MENU_FAILED" });
+        }
     } catch (err) {
         console.error("error", err);
-        dispatch({ payload: err.response, type: "DETAIL_MENU_FAILED" });
+        dispatch({ payload: err.response, type: "USERS_MENU_FAILED" });
     }
 };
 
@@ -72,8 +77,13 @@ export const deleteMenu = (id, navigate) => async (dispatch) => {
         dispatch({ type: "DELETE_MENU_PENDING" });
         const result = await axios.delete(url + `/recipe/${id}`, { headers });
         console.log(result);
-        navigate("/");
         dispatch({ payload: result.data.data, type: "DELETE_MENU_SUCCESS" });
+        toast.success("Recipe Successfully Added!", {
+            autoClose: 1500,
+        });
+        setTimeout(() => {
+            navigate("/profile");
+        }, 2000);
     } catch (err) {
         console.error("error", err);
         dispatch({ payload: err.response.data.message, type: "DELETE_MENU_FAILED" });

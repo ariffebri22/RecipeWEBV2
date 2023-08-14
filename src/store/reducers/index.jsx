@@ -7,6 +7,8 @@ import putMenu from "./putMenu";
 import detailMenu from "./detailMenu";
 import register from "./register";
 import forgotPassword from "./forgotPassword";
+import detMenu from "./detMenu";
+import usersMenu from "./usersMenu";
 
 const rootReducers = combineReducers({
     auth: authReducer,
@@ -17,6 +19,8 @@ const rootReducers = combineReducers({
     postMenu,
     putMenu,
     detailMenu,
+    detMenu,
+    usersMenu,
 });
 
 export default rootReducers;

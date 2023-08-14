@@ -10,6 +10,7 @@ import "../../styles/Profile.css";
 import imageProfile from "../../assets/img/profile.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import jwt_decode from "jwt-decode";
 
 let token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyaWVsQGdtYWlsLmNvbSIsInVzZXJzX0lkIjoyOSwidHlwZSI6InVzZXIiLCJ1c2VybmFtZSI6IkFyaWVsIiwicGhvdG8iOiJodHRwczovL3Jlcy5jbG91ZGluYXJ5LmNvbS9ka2lmdGphYmwvaW1hZ2UvdXBsb2FkL3YxNjkxNDk1NTQ0L1JlY2lwZUFQSVYyL3Bob3RvLTE2OTE0OTU1NDE2NjktNDc5NTYxMzMxX25xMzByeS5qcGciLCJpYXQiOjE2OTE0OTc4Nzl9.4Av67CtTEaTONK5rojiARa9IWrynZS1drdcN3RRuFbs";
@@ -22,10 +23,13 @@ const Profile = () => {
     const [recipeLoadingStates, setRecipeLoadingStates] = useState({});
     const [openModal, setOpenModal] = useState(false);
     const recipesPerPage = 5;
+    const tokenn = localStorage.getItem("token");
+    const decodedToken = tokenn ? jwt_decode(tokenn) : null;
+    const { photo, username, users_Id } = decodedToken || {};
 
     useEffect(() => {
         axios
-            .get(`${import.meta.env.VITE_REACT_APP_SERVER}/recipe`, {
+            .get(`${import.meta.env.VITE_REACT_APP_SERVER}/recipe/users/${users_Id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -42,7 +46,7 @@ const Profile = () => {
             .catch((err) => {
                 console.log(err);
             });
-    }, []);
+    }, [users_Id]);
 
     const currentDate = new Date();
     const formattedDate = currentDate.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" });
@@ -132,10 +136,10 @@ const Profile = () => {
                         <div className="col-md-6 headUser">
                             <div className="user d-flex align-items-center ps-5">
                                 <div className="photo me-4">
-                                    <img src={imageProfile} alt="Search" width="40" onClick={handleDetailProfile} />
+                                    <img src={photo} alt="Search" width="40" onClick={handleDetailProfile} className="rounded-circle" />
                                 </div>
                                 <div className="text">
-                                    <p className="mb-0 text-dark">Ayudia</p>
+                                    <p className="mb-0 text-dark">{username}</p>
                                     <p className="mb-0">
                                         <a href="#" className="text-dark">
                                             <strong>{recipes.length} Recipes</strong>
