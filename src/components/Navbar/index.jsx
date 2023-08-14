@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import jwt_decode from "jwt-decode";
+import Modal from "../../components/Modal";
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -15,6 +16,18 @@ const Navbar = () => {
     const token = localStorage.getItem("token");
     const decodedToken = token ? jwt_decode(token) : null;
     const { photo, username } = decodedToken || {};
+    const [openModal, setOpenModal] = useState(false);
+    const [isLoadingLogout, setIsLoadingLogout] = useState(false);
+
+    const handleLogout = async () => {
+        setOpenModal(true);
+    };
+
+    const handleConfirmLogout = () => {
+        setIsLoadingLogout(true);
+        localStorage.clear();
+        navigate("/login");
+    };
 
     const handleSearch = () => {
         toast.warn("For more complete features, please login first.", {
@@ -117,7 +130,7 @@ const Navbar = () => {
                         <div className="text">
                             <p className="mb-0 text-dark">{username}</p>
                             <p className="mb-0">
-                                <p onClick={logout} className="text-dark mb-0" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                                <p onClick={handleLogout} className="text-dark textLogout" data-bs-toggle="modal" data-bs-target="#logoutModal">
                                     <strong>Logout</strong>
                                 </p>
                             </p>
@@ -140,6 +153,7 @@ const Navbar = () => {
                 )}
             </div>
             <ToastContainer />
+            {openModal && <Modal open={openModal} onClose={() => setOpenModal(false)} onDelete={handleConfirmLogout} isMessage="Are you sure you want to logout?" isTitle={`CONFIRM`} />}
         </nav>
     );
 };

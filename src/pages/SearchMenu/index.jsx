@@ -7,6 +7,7 @@ import Footer from "../../components/Footer";
 import "../../styles/SearchMenu.css";
 import { getMenu } from "../../store/action/menu";
 import { useDispatch, useSelector } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
 
 const SearchMenu = () => {
     const navigate = useNavigate();
@@ -16,10 +17,22 @@ const SearchMenu = () => {
     const dispatch = useDispatch();
     const { menu } = useSelector((state) => state);
     const { isError, errorMessage, isLoading, data } = menu;
+
     const recipesPerPage = 5;
 
     useEffect(() => {
-        dispatch(getMenu());
+        if (isError && errorMessage) {
+            toast.warn(errorMessage, {
+                hideProgressBar: true,
+                autoClose: 2000,
+            });
+        } else if (isError && !errorMessage) {
+            toast.error("Something wrong");
+        }
+    }, [isError, errorMessage]);
+
+    useEffect(() => {
+        dispatch(getMenu(navigate));
     }, []);
 
     const getFirst10Words = (sentence) => {
@@ -151,6 +164,7 @@ const SearchMenu = () => {
                 </div>
             </section>
             <Footer />
+            <ToastContainer />
         </>
     );
 };

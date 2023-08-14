@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import "../../styles/DetailMenu.css";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import imageProfile from "../../assets/img/profile.png";
@@ -10,6 +10,7 @@ import { getMenuDetail, getMenuByUsers } from "../../store/action/menu";
 import { toast } from "react-toastify";
 
 const DetailMenu = () => {
+    const navigate = useNavigate();
     const { id } = useParams();
     const dispatch = useDispatch();
     const [formattedDate, setFormattedDate] = useState("");
@@ -34,8 +35,8 @@ const DetailMenu = () => {
     }, [isError, errorMessage]);
 
     useEffect(() => {
-        dispatch(getMenuDetail(id));
-    }, [dispatch, id]);
+        dispatch(getMenuDetail(id, navigate));
+    }, [dispatch, id, navigate]);
 
     useEffect(() => {
         if (data) {

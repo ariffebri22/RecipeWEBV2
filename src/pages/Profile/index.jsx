@@ -7,105 +7,75 @@ import Footer from "../../components/Footer";
 import BtnDeleting from "../../components/BtnDeleting";
 import Modal from "../../components/Modal";
 import "../../styles/Profile.css";
-import imageProfile from "../../assets/img/profile.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import jwt_decode from "jwt-decode";
-
-let token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyaWVsQGdtYWlsLmNvbSIsInVzZXJzX0lkIjoyOSwidHlwZSI6InVzZXIiLCJ1c2VybmFtZSI6IkFyaWVsIiwicGhvdG8iOiJodHRwczovL3Jlcy5jbG91ZGluYXJ5LmNvbS9ka2lmdGphYmwvaW1hZ2UvdXBsb2FkL3YxNjkxNDk1NTQ0L1JlY2lwZUFQSVYyL3Bob3RvLTE2OTE0OTU1NDE2NjktNDc5NTYxMzMxX25xMzByeS5qcGciLCJpYXQiOjE2OTE0OTc4Nzl9.4Av67CtTEaTONK5rojiARa9IWrynZS1drdcN3RRuFbs";
+import { getMenuByUsers, deleteMenu } from "../../store/action/menu";
+import { useDispatch, useSelector } from "react-redux";
 
 const Profile = () => {
     const navigate = useNavigate();
     const [recipes, setRecipes] = useState([]);
+    const [recipeTitle, setRecipeTitle] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [loading, setLoading] = useState(false);
-    const [recipeLoadingStates, setRecipeLoadingStates] = useState({});
     const [openModal, setOpenModal] = useState(false);
+    const [selectedMenuId, setSelectedMenuId] = useState(null);
     const recipesPerPage = 5;
     const tokenn = localStorage.getItem("token");
     const decodedToken = tokenn ? jwt_decode(tokenn) : null;
     const { photo, username, users_Id } = decodedToken || {};
+    const dispatch = useDispatch();
+    const { usersMenu } = useSelector((state) => state);
+    const { isLoading, data } = usersMenu;
+    const [isError, setIsError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
+    // Load recipes when the component mounts
     useEffect(() => {
-        axios
-            .get(`${import.meta.env.VITE_REACT_APP_SERVER}/recipe/users/${users_Id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            .then((res) => {
-                setRecipes(res.data.data);
+        dispatch(getMenuByUsers(users_Id, navigate)).catch((error) => {
+            setIsError(true);
+            setErrorMessage("Recipe data not found");
+        });
+    }, [dispatch, users_Id, navigate]);
 
-                const initialRecipeLoadingStates = {};
-                res.data.data.forEach((recipe) => {
-                    initialRecipeLoadingStates[recipe.id] = false;
-                });
-                setRecipeLoadingStates(initialRecipeLoadingStates);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }, [users_Id]);
+    // Set recipes data when data is available
+    useEffect(() => {
+        if (data && data.length > 0) {
+            setRecipes(data);
+        }
+    }, [data]);
+
+    const handleDeleteMenu = (recipeId, recipeTitle) => {
+        setSelectedMenuId(recipeId);
+        setRecipeTitle(recipeTitle);
+        setOpenModal(true);
+    };
+
+    const handleConfirmDelete = async () => {
+        if (selectedMenuId !== null) {
+            try {
+                await dispatch(deleteMenu(selectedMenuId, navigate)); // Memasukkan navigate sebagai parameter
+                setSelectedMenuId(null);
+                setRecipeTitle(null);
+
+                dispatch(getMenuByUsers(users_Id, navigate));
+            } catch (error) {
+                console.error("Error deleting menu:", error);
+                // Handle error if needed
+            } finally {
+                setOpenModal(false);
+            }
+        }
+    };
 
     const currentDate = new Date();
     const formattedDate = currentDate.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" });
-
-    const handleDeleteMenu = (recipeId) => {
-        setRecipeLoadingStates((prevStates) => ({
-            ...prevStates,
-            [recipeId]: true,
-        }));
-
-        axios
-            .delete(`${import.meta.env.VITE_REACT_APP_SERVER}/recipe/${recipeId}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            .then((res) => {
-                console.log("Recipe deleted successfully!");
-                axios
-                    .get(`${import.meta.env.VITE_REACT_APP_SERVER}/recipe`, {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    })
-                    .then((res) => {
-                        setRecipes(res.data.data);
-                        setRecipeLoadingStates((prevStates) => ({
-                            ...prevStates,
-                            [recipeId]: false,
-                        }));
-                        toast.success("Delete Success!", {
-                            autoClose: 1000,
-                        });
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                        setRecipeLoadingStates((prevStates) => ({
-                            ...prevStates,
-                            [recipeId]: false,
-                        }));
-                    });
-            })
-            .catch((err) => {
-                console.log(err);
-                toast.error(err.response.data.message, {
-                    hideProgressBar: true,
-                });
-                setRecipeLoadingStates((prevStates) => ({
-                    ...prevStates,
-                    [recipeId]: false,
-                }));
-            });
-    };
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     const indexOfLastRecipe = currentPage * recipesPerPage;
     const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
-    const currentRecipes = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe);
+    const currentRecipes = data ? data.slice(indexOfFirstRecipe, indexOfLastRecipe) : [];
 
     const truncateDescription = (description) => {
         const words = description.split(" ");
@@ -123,7 +93,7 @@ const Profile = () => {
         navigate(`/detail/${recipeId}`);
     };
 
-    const handleDetailProfile = (recipeId) => {
+    const handleDetailProfile = () => {
         navigate(`/detprofile`);
     };
 
@@ -140,11 +110,15 @@ const Profile = () => {
                                 </div>
                                 <div className="text">
                                     <p className="mb-0 text-dark">{username}</p>
-                                    <p className="mb-0">
-                                        <a href="#" className="text-dark">
-                                            <strong>{recipes.length} Recipes</strong>
-                                        </a>
-                                    </p>
+                                    {data ? (
+                                        <p className="mb-0 text-dark">
+                                            <strong>{data.length} Recipe</strong>
+                                        </p>
+                                    ) : (
+                                        <p className="mb-0">
+                                            <strong>0 Recipes</strong>
+                                        </p>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -181,35 +155,45 @@ const Profile = () => {
                     </div>
                     <div className="tab-content mt-3" id="myTabContent">
                         <div className="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
-                            {currentRecipes.map((recipe, index) => (
-                                <div key={index} className="row ms-1 ps-5">
-                                    <div className="col-md-4 mt-5 imgCover rounded-4 p-0 me-5" style={{ width: "18rem" }}>
-                                        <img src={recipe.photo} alt="Search" className="rounded-4" style={{ width: "18rem", height: "18rem", objectFit: "cover" }} onClick={() => handleDetailMenu(recipe.id)} />
-                                    </div>
-                                    <div className="col-md-4 titleDesc">
-                                        <p className="fs-5 mt-3" onClick={() => handleDetailMenu(recipe.id)}>
-                                            {recipe.title}
-                                        </p>
-                                        <div className="desc">
-                                            <p>
-                                                <strong>Ingredients:</strong> <br />
-                                                {truncateDescription(recipe.ingredients)}
+                            {isError ? (
+                                <p className="text-center mt-4">Error: {errorMessage}</p>
+                            ) : data && data.length > 0 ? (
+                                currentRecipes.map((recipe, index) => (
+                                    <div key={index} className="row ms-1 ps-5">
+                                        <div className="col-md-4 mt-5 imgCover rounded-4 p-0 me-5" style={{ width: "18rem" }}>
+                                            <img src={recipe.photo} alt="Search" className="rounded-4" style={{ width: "18rem", height: "18rem", objectFit: "cover" }} onClick={() => handleDetailMenu(recipe.id)} />
+                                        </div>
+                                        <div className="col-md-4 titleDesc">
+                                            <p className="fs-5 mt-3" onClick={() => handleDetailMenu(recipe.id)}>
+                                                {recipe.title}
                                             </p>
-                                        </div>
-                                        <button type="button" className="btn btn-warning">
-                                            {recipe.likes} Likes - {recipe.comments} Comment - {recipe.bookmarks} Bookmark
-                                        </button>
-                                        <div className="author mt-3 d-flex">
-                                            <button type="button" className="btn me-2 btn-primary btnEdit" onClick={() => handleEditMenu(recipe.id)}>
-                                                Edit Menu
+                                            <div className="desc">
+                                                <p>
+                                                    <strong>Ingredients:</strong> <br />
+                                                    {truncateDescription(recipe.ingredients)}
+                                                </p>
+                                            </div>
+                                            <button type="button" className="btn btn-warning">
+                                                {recipe.likes} Likes - {recipe.comments} Comment - {recipe.bookmarks} Bookmark
                                             </button>
-                                            <BtnDeleting type="submit" className="btn me-2 btn-danger btnDelete" isLoading={recipeLoadingStates[recipe.id]} onClick={() => setOpenModal(true)}>
-                                                Delete Menu
-                                            </BtnDeleting>
+                                            <div className="author mt-3 d-flex">
+                                                <button type="button" className="btn me-2 btn-primary btnEdit" onClick={() => handleEditMenu(recipe.id)}>
+                                                    Edit Menu
+                                                </button>
+                                                <BtnDeleting
+                                                    type="submit"
+                                                    className="btn me-2 btn-danger btnDelete"
+                                                    onClick={() => handleDeleteMenu(recipe.id, recipe.title)} // Open modal when delete button is clicked
+                                                >
+                                                    Delete Menu
+                                                </BtnDeleting>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))}
+                                ))
+                            ) : (
+                                <p className="text-center mt-4">You havent added any recipes yet. Add your best recipe now!</p>
+                            )}
                             <div className="row ms-1 mt-5">
                                 <div className="col d-flex align-items-center justify-content-center page">
                                     <div className="pagination">
@@ -239,7 +223,7 @@ const Profile = () => {
             </section>
             <Footer />
             <ToastContainer />
-            <Modal open={openModal} onClose={() => setOpenModal(false)} />
+            {openModal && <Modal open={openModal} onClose={() => setOpenModal(false)} onDelete={handleConfirmDelete} isMessage={`Are you sure to delete ${recipeTitle}?`} isTitle={`CONFIRM`} />}
         </>
     );
 };

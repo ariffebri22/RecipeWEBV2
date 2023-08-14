@@ -40,8 +40,8 @@ const EditMenu = () => {
     });
 
     useEffect(() => {
-        dispatch(getMenuDetail(id));
-    }, [dispatch, id]);
+        dispatch(getMenuDetail(id, navigate));
+    }, [dispatch, id, navigate]);
 
     useEffect(() => {
         if (data) {

@@ -25,3 +25,11 @@
 .photo img {
     width: 40px !important;
 }
+
+.textLogout {
+    cursor: pointer;
+}
+
+.textLogout:hover {
+    color: red !important;
+}

@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 
 let url = import.meta.env.VITE_REACT_APP_SERVER;
 
-export const getMenuDetail = (id) => async (dispatch) => {
+export const getMenuDetail = (id, navigate) => async (dispatch) => {
     try {
         const headers = {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -15,10 +15,20 @@ export const getMenuDetail = (id) => async (dispatch) => {
     } catch (err) {
         console.error("error", err);
         dispatch({ payload: err.response, type: "DETAIL_MENU_FAILED" });
+        if (err?.response?.data?.message === "Login session expired, please login again") {
+            toast.error(err.response.data.message, {
+                autoClose: 3000,
+            });
+            setTimeout(() => {
+                // Clear local storage and navigate to login page
+                localStorage.clear();
+                navigate("/login");
+            }, 4000);
+        }
     }
 };
 
-export const getMenuByUsers = (id) => async (dispatch) => {
+export const getMenuByUsers = (id, navigate) => async (dispatch) => {
     try {
         const headers = {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -35,10 +45,20 @@ export const getMenuByUsers = (id) => async (dispatch) => {
     } catch (err) {
         console.error("error", err);
         dispatch({ payload: err.response, type: "USERS_MENU_FAILED" });
+        if (err?.response?.data?.message === "Login session expired, please login again") {
+            toast.error(err.response.data.message, {
+                autoClose: 3000,
+            });
+            setTimeout(() => {
+                // Clear local storage and navigate to login page
+                localStorage.clear();
+                navigate("/login");
+            }, 4000);
+        }
     }
 };
 
-export const getMenu = () => async (dispatch) => {
+export const getMenu = (navigate) => async (dispatch) => {
     try {
         const headers = {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -50,10 +70,22 @@ export const getMenu = () => async (dispatch) => {
     } catch (err) {
         console.error("error", err);
         dispatch({ payload: err.response, type: "GET_MENU_FAILED" });
+
+        // Check if the error message indicates expired login session
+        if (err?.response?.data?.message === "Login session expired, please login again") {
+            toast.error(err.response.data.message, {
+                autoClose: 3000,
+            });
+            setTimeout(() => {
+                // Clear local storage and navigate to login page
+                localStorage.clear();
+                navigate("/login");
+            }, 4000);
+        }
     }
 };
 
-export const searchMenu = (data) => async (dispatch) => {
+export const searchMenu = (data, navigate) => async (dispatch) => {
     try {
         const headers = {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -65,6 +97,16 @@ export const searchMenu = (data) => async (dispatch) => {
     } catch (err) {
         console.error("error", err);
         dispatch({ payload: err.response, type: "GET_MENU_FAILED" });
+        if (err?.response?.data?.message === "Login session expired, please login again") {
+            toast.error(err.response.data.message, {
+                autoClose: 3000,
+            });
+            setTimeout(() => {
+                // Clear local storage and navigate to login page
+                localStorage.clear();
+                navigate("/login");
+            }, 4000);
+        }
     }
 };
 
@@ -78,7 +120,7 @@ export const deleteMenu = (id, navigate) => async (dispatch) => {
         const result = await axios.delete(url + `/recipe/${id}`, { headers });
         console.log(result);
         dispatch({ payload: result.data.data, type: "DELETE_MENU_SUCCESS" });
-        toast.success("Recipe Successfully Added!", {
+        toast.success("Recipe Successfully Deleted!", {
             autoClose: 1500,
         });
         setTimeout(() => {
@@ -87,6 +129,16 @@ export const deleteMenu = (id, navigate) => async (dispatch) => {
     } catch (err) {
         console.error("error", err);
         dispatch({ payload: err.response.data.message, type: "DELETE_MENU_FAILED" });
+        if (err?.response?.data?.message === "Login session expired, please login again") {
+            toast.error(err.response.data.message, {
+                autoClose: 3000,
+            });
+            setTimeout(() => {
+                // Clear local storage and navigate to login page
+                localStorage.clear();
+                navigate("/login");
+            }, 4000);
+        }
     }
 };
 
@@ -113,6 +165,16 @@ export const postMenu = (data, navigate) => async (dispatch) => {
     } catch (err) {
         console.error("error", err);
         dispatch({ payload: err.response.data.message, type: "POST_MENU_FAILED" });
+        if (err?.response?.data?.message === "Login session expired, please login again") {
+            toast.error(err.response.data.message, {
+                autoClose: 3000,
+            });
+            setTimeout(() => {
+                // Clear local storage and navigate to login page
+                localStorage.clear();
+                navigate("/login");
+            }, 4000);
+        }
     }
 };
 
@@ -139,5 +201,15 @@ export const updateMenu = (data, id, navigate) => async (dispatch) => {
     } catch (err) {
         console.error("error", err);
         dispatch({ payload: err.response.data.message, type: "PUT_MENU_FAILED" });
+        if (err?.response?.data?.message === "Login session expired, please login again") {
+            toast.error(err.response.data.message, {
+                autoClose: 3000,
+            });
+            setTimeout(() => {
+                // Clear local storage and navigate to login page
+                localStorage.clear();
+                navigate("/login");
+            }, 4000);
+        }
     }
 };
