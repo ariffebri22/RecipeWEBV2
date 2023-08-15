@@ -1,8 +1,5 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-let headers = {
-    "Content-Type": "multipart/form-data",
-};
 
 export const login = (data, navigate) => async (dispatch) => {
     try {
@@ -23,6 +20,10 @@ export const login = (data, navigate) => async (dispatch) => {
 
 export const register = (data, navigate) => async (dispatch) => {
     try {
+        let headers = {
+            "Content-Type": "multipart/form-data",
+        };
+
         dispatch({ type: "AUTH_REGIS_PENDING" });
 
         const response = await axios.post(`${import.meta.env.VITE_REACT_APP_SERVER}users`, data, { headers });
@@ -42,5 +43,45 @@ export const register = (data, navigate) => async (dispatch) => {
             autoClose: 1500,
             hideProgressBar: true,
         });
+    }
+};
+
+export const updateProfile = (data, id, navigate) => async (dispatch) => {
+    try {
+        const headers = {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "multipart/form-data",
+        };
+
+        dispatch({ type: "PUT_PROFILE_PENDING" });
+        const result = await axios.put(`${import.meta.env.VITE_REACT_APP_SERVER}users/${id}`, data, { headers });
+        console.log(result);
+        dispatch({ payload: result.data.data, type: "PUT_PROFILE_SUCCESS" });
+        toast.success("Account has been updated successfully!", {
+            autoClose: 1500,
+        });
+        setTimeout(() => {
+            toast.warn("You will be directed to the login page, please login again", {
+                autoClose: 1500,
+            });
+        }, 2000);
+        setTimeout(() => {
+            navigate("/login");
+        }, 5000);
+    } catch (err) {
+        console.error("error", err);
+        dispatch({ payload: err.response.data.message, type: "PUT_PROFILE_FAILED" });
+        if (err?.response?.data?.message === "Login session expired, please login again") {
+            toast.error(err.response.data.message, {
+                autoClose: 3000,
+            });
+            setTimeout(() => {
+                // Clear local storage and navigate to login page
+                localStorage.clear();
+                navigate("/login");
+            }, 4000);
+        } else {
+            toast.error(`${err.response.data.message}`);
+        }
     }
 };

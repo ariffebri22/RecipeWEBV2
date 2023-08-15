@@ -92,7 +92,7 @@ export const searchMenu = (data, navigate) => async (dispatch) => {
         };
 
         dispatch({ type: "GET_MENU_PENDING" });
-        const result = await axios.get(url + `/recipe/detail?search=${data}`, { headers });
+        const result = await axios.get(url + `/recipe/detail/?search=${data}`, { headers });
         dispatch({ payload: result.data.data, type: "GET_MENU_SUCCESS" });
     } catch (err) {
         console.error("error", err);
@@ -210,6 +210,8 @@ export const updateMenu = (data, id, navigate) => async (dispatch) => {
                 localStorage.clear();
                 navigate("/login");
             }, 4000);
+        } else {
+            toast.error(`${err.response.data.message}`);
         }
     }
 };

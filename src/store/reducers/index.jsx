@@ -9,6 +9,7 @@ import register from "./register";
 import forgotPassword from "./forgotPassword";
 import detMenu from "./detMenu";
 import usersMenu from "./usersMenu";
+import detailProfile from "./detailProfile";
 
 const rootReducers = combineReducers({
     auth: authReducer,
@@ -21,6 +22,7 @@ const rootReducers = combineReducers({
     detailMenu,
     detMenu,
     usersMenu,
+    detailProfile,
 });
 
 export default rootReducers;

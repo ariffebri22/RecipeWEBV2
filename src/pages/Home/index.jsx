@@ -18,6 +18,44 @@ import image9 from "../../assets/img/Rectangle 319.png";
 import "../../styles/Home.css";
 
 const Home = () => {
+    const navigate = useNavigate();
+
+    const handleImage1 = () => {
+        navigate(`/detail/${121}`);
+    };
+
+    const handleImage2 = () => {
+        navigate(`/detail/${179}`);
+    };
+
+    const handleImage3 = () => {
+        navigate(`/detail/${180}`);
+    };
+
+    const handleImage4 = () => {
+        navigate(`/detail/${121}`);
+    };
+
+    const handleImage5 = () => {
+        navigate(`/detail/${121}`);
+    };
+
+    const handleImage6 = () => {
+        navigate(`/detail/${121}`);
+    };
+
+    const handleImage7 = () => {
+        navigate(`/detail/${121}`);
+    };
+
+    const handleImage8 = () => {
+        navigate(`/detail/${121}`);
+    };
+
+    const handleImage9 = () => {
+        navigate(`/detail/${121}`);
+    };
+
     return (
         <>
             <div className="side bg-warning"></div>
@@ -38,7 +76,7 @@ const Home = () => {
                         </div>
                         <div className="col-md-6">
                             <div className="imgCover bg-primary ms-5 rounded-4">
-                                <img src={image1} alt="Image 1" className="rounded-4" />
+                                <img src={image1} alt="Image 1" className="rounded-4" onClick={() => handleImage1()} />
                             </div>
                         </div>
                     </div>
@@ -70,7 +108,9 @@ const Home = () => {
                     <div className="row mt-5">
                         <div className="col-md-6 mt-5 mb-5 imageContent" data-aos="fade-right" data-aos-duration="2000">
                             <div className="squareborder position-absolute rounded-3"></div>
-                            <img src={image2} alt="Image 2" width="450" className="rounded-3 ms-5" />
+                            <div className="imgCover ms-5 rounded-4">
+                                <img src={image2} alt="Image 2" width="450" className="rounded-3 " onClick={() => handleImage2()} />
+                            </div>
                         </div>
                         <div className="col-md-6 m-auto">
                             <div className="content" data-aos="fade-left" data-aos-duration="2000">
@@ -98,7 +138,9 @@ const Home = () => {
                     <div className="row mt-5">
                         <div className="col-md-6 mt-5 mb-5 imageContent">
                             <div className="squaresolid position-absolute bg-warning" data-aos="fade-right" data-aos-duration="2000"></div>
-                            <img src={image3} alt="Image 3" width="450" className="rounded-3 ms-5 mt-5" data-aos="fade-right" data-aos-duration="2000" />
+                            <div className="imgCover  ms-5 mt-5 rounded-4" data-aos="fade-right" data-aos-duration="2000">
+                                <img src={image3} alt="Image 3" width="450" className="rounded-3" onClick={() => handleImage3()} />
+                            </div>
                         </div>
                         <div className="col-md-6 m-auto">
                             <div className="content" data-aos="fade-left" data-aos-duration="2000">
