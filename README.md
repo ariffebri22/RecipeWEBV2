@@ -58,6 +58,7 @@ This app was built with some technologies below:
 -   Vite.js
 -   Eslint
 -   DOM
+-   Vercel
 
 ## Installation
 
