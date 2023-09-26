@@ -85,11 +85,41 @@ If you want to run this project locally, we recommend you configure the back-end
 -   Setup .env
 
 ```
-    VITE_REACT_APP_API_KEY=
+    VITE_REACT_APP_API_KEY= 'Contact Me'
 ```
 
 -   Type `npm run dev` To Start Website
 -   Type `npm run start` To Start Production
+
+-   ## Screenshot
+
+| Register Page | Login Page |
+| ------------- | ------------- |
+| [![Regis.png](https://res.cloudinary.com/dcpi3m2up/image/upload/v1695713659/samples/Recipe/web/W-regis_bgtqw3.png)](https://res.cloudinary.com/dcpi3m2up/image/upload/v1695713659/samples/Recipe/web/W-regis_bgtqw3.png) | [![Login.png](https://res.cloudinary.com/dcpi3m2up/image/upload/v1695713660/samples/Recipe/web/W-login_f21dna.png)](https://res.cloudinary.com/dcpi3m2up/image/upload/v1695713660/samples/Recipe/web/W-login_f21dna.png) |
+
+| Landing Page | Search Page |
+| :---: | :---: |
+| [![Landing.png](https://res.cloudinary.com/dcpi3m2up/image/upload/v1695713685/samples/Recipe/web/W-landingpage_eg2iwk.png)](https://res.cloudinary.com/dcpi3m2up/image/upload/v1695713685/samples/Recipe/web/W-landingpage_eg2iwk.png) | [![Search.png](https://res.cloudinary.com/dcpi3m2up/image/upload/v1695713684/samples/Recipe/web/W-search_vsvgps.png)](https://res.cloudinary.com/dcpi3m2up/image/upload/v1695713684/samples/Recipe/web/W-search_vsvgps.png) |
+
+| Add Page | Update Page |
+| :---: | :---: |
+| [![Add.png](https://res.cloudinary.com/dcpi3m2up/image/upload/v1695713669/samples/Recipe/web/W-add_qiqj3n.png)](https://res.cloudinary.com/dcpi3m2up/image/upload/v1695713669/samples/Recipe/web/W-add_qiqj3n.png) | [![Update.png](https://res.cloudinary.com/dcpi3m2up/image/upload/v1695713683/samples/Recipe/web/W-update_hfp1ty.png)](https://res.cloudinary.com/dcpi3m2up/image/upload/v1695713683/samples/Recipe/web/W-update_hfp1ty.png) |
+
+| Detail Page | Profile Page |
+| :---: | :---: |
+| [![Detail.png](https://res.cloudinary.com/dcpi3m2up/image/upload/v1695713670/samples/Recipe/web/W-detail_fom1hc.png)](https://res.cloudinary.com/dcpi3m2up/image/upload/v1695713670/samples/Recipe/web/W-detail_fom1hc.png) | [![Profile.png](https://res.cloudinary.com/dcpi3m2up/image/upload/v1695713674/samples/Recipe/web/W-profile_wgcndg.png)](hhttps://res.cloudinary.com/dcpi3m2up/image/upload/v1695713674/samples/Recipe/web/W-profile_wgcndg.png) |
+
+| Delete Page | Profile Details Page |
+| :---: | :---: |
+| [![Delete.png](https://res.cloudinary.com/dcpi3m2up/image/upload/v1695713661/samples/Recipe/web/W-delete_qgtj1q.png)](https://res.cloudinary.com/dcpi3m2up/image/upload/v1695713661/samples/Recipe/web/W-delete_qgtj1q.png) | [![ProfileDetails.png](https://res.cloudinary.com/dcpi3m2up/image/upload/v1695713659/samples/Recipe/web/W-detailprofile_jrir3m.png)](https://res.cloudinary.com/dcpi3m2up/image/upload/v1695713659/samples/Recipe/web/W-detailprofile_jrir3m.png) |
+
+| Home Mobile View | Register Mobile View | Search Mobile View |
+| :---: | :---: | :---: |
+| [![Home.png](https://res.cloudinary.com/dcpi3m2up/image/upload/v1695713672/samples/Recipe/web/WR-landingpage_rngvdm.jpg)](https://res.cloudinary.com/dcpi3m2up/image/upload/v1695713672/samples/Recipe/web/WR-landingpage_rngvdm.jpg) | [![RegisMobile.png](https://res.cloudinary.com/dcpi3m2up/image/upload/v1695717991/samples/Recipe/web/Screenshot_2023-09-26-15-45-48-645_com.android.chrome_xqnkz6.jpg)](https://res.cloudinary.com/dcpi3m2up/image/upload/v1695717991/samples/Recipe/web/Screenshot_2023-09-26-15-45-48-645_com.android.chrome_xqnkz6.jpg) | [![Search Mobile.png](https://res.cloudinary.com/dcpi3m2up/image/upload/v1695713677/samples/Recipe/web/WR-search_ajmdk1.jpg)](https://res.cloudinary.com/dcpi3m2up/image/upload/v1695713677/samples/Recipe/web/WR-search_ajmdk1.jpg) |
+
+| Add Mobile View | Profile Mobile View | Detail Profile Mobile View |
+| :---: | :---: | :---: |
+| [![AddMobile.png](https://res.cloudinary.com/dcpi3m2up/image/upload/v1695713679/samples/Recipe/web/WR-add_f7kbuk.jpg)](https://res.cloudinary.com/dcpi3m2up/image/upload/v1695713679/samples/Recipe/web/WR-add_f7kbuk.jpg) | [![ProfileMobile.png](https://res.cloudinary.com/dcpi3m2up/image/upload/v1695713670/samples/Recipe/web/WR-profile_nzw5vv.jpg)](https://res.cloudinary.com/dcpi3m2up/image/upload/v1695713670/samples/Recipe/web/WR-profile_nzw5vv.jpg) | [![DetailProfile.png](https://res.cloudinary.com/dcpi3m2up/image/upload/v1695713660/samples/Recipe/web/WR-detailsprofile_ineqoj.jpg)](https://res.cloudinary.com/dcpi3m2up/image/upload/v1695713660/samples/Recipe/web/WR-detailsprofile_ineqoj.jpg) |
 
 ## Contributing
 
